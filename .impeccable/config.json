@@ -1,0 +1,10 @@
+{
+  "_comment": "Deliberate exceptions, per kit/DESIGN-STANDARD.md Part IV slop gate. Each entry states why; none is a blanket ignore.",
+  "exceptions": [
+    {
+      "rule": "clipped-overflow-container",
+      "target": "body",
+      "why": "body{overflow-x:hidden} is the three-viewport law's mandated backstop (DESIGN-STANDARD law 1). It clips horizontally only; the one popover on the page (the phone menu) lives in the sticky header and opens downward, so nothing needs to escape sideways."
+    }
+  ]
+}

@@ -1,8 +1,854 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>Riverboat marina — a new site is being crafted</title>
-<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#131519;color:#FAF7F0;font-family:'Iowan Old Style','Charter','Palatino',Georgia,serif;text-align:center;padding:24px;box-sizing:border-box}
-.m{width:44px;height:44px;border:1.4px solid #B08D4A;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px;background:linear-gradient(160deg,#E3C57E,#B08D4A 70%);-webkit-background-clip:text;background-clip:text;color:transparent}
-h1{font-size:clamp(26px,6vw,44px);font-weight:600;letter-spacing:.04em;margin:0 0 10px}
-p{color:#8C919B;font-size:15px;margin:0 0 6px}.tiny{font-size:10px;letter-spacing:.24em;text-transform:uppercase;margin-top:26px;color:#7A5E2A}</style>
-</head><body><div><div class="m">M</div><h1>Riverboat marina</h1><p>A new site is being crafted.</p>
-<div class="tiny">Merritt Digital · demonstration build in progress</div></div></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Riverboat Marina · Covered Berths &amp; Dry Storage · Isleton, CA</title>
+<meta name="description" content="Covered berths from 30′ to 50′, dry storage and a full-service boatyard on the Delta Loop in Isleton, California. Riverboat Marina, 106 W. Brannan Island Road.">
+<meta name="theme-color" content="#2F2724">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%232F2724'/%3E%3Cg fill='none' stroke='%23CFC9A0' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M9 41h32l-2 4.5H12z'/%3E%3Cpath d='M13 41v-7h26v7M17 34v-5h18v5M24 29v-4h7v4M19 29V17M23 29V18'/%3E%3Ccircle cx='46' cy='39' r='6'/%3E%3Cpath d='M46 33v12M40 39h12'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+/* ================================================================
+   RIVERBOAT MARINA — design language extracted from the entrance
+   signpost at 106 W. Brannan Island Rd: stained-timber crown board,
+   stacked white boards in spruce frames, the green BERTHS swing sign
+   with hanging length tags, the 106 plate, the rope rail, the planter.
+   Palette sampled from the client's own photo of that sign.
+   ================================================================ */
+:root{
+  --timber:#2F2724; --timber-deep:#1C1614; --timber-hi:#4A372F;
+  --field:#25302D;  --field-deep:#1B2422;  --frame:#323D3C;
+  --sage:#42615A;   --sage-ink:#2F5A4F;    --sage-edge:#2E4741;
+  --board:#FBFBF8;  --paper-ground:#ECECE5;
+  --ink:#1C2624;    --ink-dim:#46524F;     --muted:#5C6764;
+  --rope:#CFC9A0;   --line:#8FA39B;
+  --on-field:#EDEEE8; --on-field-dim:#BAC4BF;
+  --plate:#24282C;
+  --sign:"Avenir Next Condensed","Arial Narrow","Nimbus Sans Narrow",sans-serif-condensed,"Helvetica Neue",Arial,sans-serif;
+  --serif:"Iowan Old Style","Charter","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --slab:"Rockwell","Clarendon","Iowan Old Style",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  --settle:cubic-bezier(.22,.61,.36,1); --drama:cubic-bezier(.61,.04,.4,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--field);color:var(--on-field);font-family:var(--sans);font-size:16.5px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+p{margin:0 0 1em}
+.wrap{max-width:1160px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
+header.site,section,footer{position:relative}
+section,footer{overflow:hidden}
+section{scroll-margin-top:60px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:12px;top:-60px;z-index:100;background:var(--board);color:var(--ink);padding:12px 16px;border-radius:4px;font-weight:600}
+.skip:focus{top:10px}
+:focus-visible{outline:3px solid var(--rope);outline-offset:3px}
+.paper :focus-visible{outline-color:var(--sage)}
+
+/* ---------- sign lettering (routed caps) ---------- */
+.caps{font-family:var(--sign);font-weight:700;text-transform:uppercase;letter-spacing:.14em}
+
+/* ---------- header: the crown board ---------- */
+header.site{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#352C29,#2A2320);border-bottom:1px solid #120E0D;box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 8px 18px -14px rgba(0,0,0,.8)}
+.head-in{display:flex;align-items:center;gap:8px;min-height:60px}
+.brand{display:flex;align-items:center;gap:8px;min-width:0;min-height:44px;text-decoration:none;color:#F4F1EC;font-family:var(--sign);font-weight:700;font-size:13.5px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.brand svg{width:32px;height:32px;color:var(--rope);flex:none}
+.nav-inline{display:none;margin-left:auto}
+.nav-inline a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;font-family:var(--sign);font-weight:700;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:#E2DED5;text-decoration:none}
+.nav-inline a:hover,.nav-inline a:focus-visible{color:#fff;text-decoration:underline;text-decoration-color:var(--rope);text-underline-offset:7px;text-decoration-thickness:2px}
+.tel{display:none;align-items:center;min-height:44px;padding:0 12px;font-family:var(--serif);font-weight:600;font-size:17px;color:#F4F1EC;text-decoration:none;white-space:nowrap}
+.tag-cta{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-left:auto;padding:0 11px 0 10px;background:var(--sage);border:2px solid var(--sage-edge);border-radius:4px;color:#fff;font-family:var(--sign);font-weight:700;font-size:13.5px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;flex:none;transition:background-color .18s var(--settle),transform .18s var(--settle)}
+.tag-cta::before{content:"";width:8px;height:8px;border-radius:50%;background:#2A2320;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
+.tag-cta:hover,.tag-cta:focus-visible{background:#4C7068}
+.tag-cta:active{transform:translateY(1px)}
+.menu{position:relative;flex:none}
+.menu summary{list-style:none;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:4px;border:2px solid rgba(207,201,160,.45);cursor:pointer;color:var(--rope)}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary svg{width:20px;height:20px}
+.menu[open] summary{background:rgba(207,201,160,.12)}
+.menu nav{position:absolute;right:0;top:52px;width:min(78vw,280px);background:var(--board);border:4px solid var(--frame);border-radius:4px;padding:6px;box-shadow:0 22px 40px -18px rgba(0,0,0,.7)}
+.menu nav a{display:flex;align-items:center;min-height:46px;padding:0 14px;color:var(--ink);text-decoration:none;font-family:var(--sign);font-weight:700;font-size:15px;letter-spacing:.12em;text-transform:uppercase;border-radius:2px}
+.menu nav a+a{border-top:1px solid #E3E5DE}
+.menu nav a:hover,.menu nav a:focus-visible{background:#EEF2EE}
+@media(min-width:840px){
+  .nav-inline{display:flex}
+  .menu{display:none}
+  .tel{display:inline-flex}
+  .tag-cta{margin-left:4px;padding:0 14px 0 12px;font-size:14.5px;letter-spacing:.16em}
+  .brand{gap:10px;font-size:15px;letter-spacing:.16em}
+  .brand svg{width:36px;height:36px}
+}
+
+/* ---------- engraving (one motif, cropped & mirrored) ---------- */
+.engraving{position:absolute;pointer-events:none;color:var(--line);opacity:.12;z-index:0}
+.engraving svg{display:block}
+
+/* ---------- hero ---------- */
+.hero{background:radial-gradient(70% 60% at 0% 0%,#33433F 0%,rgba(51,67,63,0) 70%),var(--field);padding:0 0 56px}
+.hero-photo{position:absolute;left:0;right:0;top:0;height:min(560px,128vw);z-index:0;margin:0}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:52% 45%}
+.hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(27,36,34,.05) 0%,rgba(27,36,34,.18) 52%,rgba(37,48,45,.86) 86%,var(--field) 100%)}
+.hero-grid{display:grid;gap:34px;padding-top:30px;grid-template-areas:"sign" "copy"}
+.hero-copy{grid-area:copy}
+.kicker{margin:0 0 14px;font-family:var(--sign);font-weight:700;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--rope)}
+.lede{margin:0 0 18px;font-family:var(--serif);font-weight:600;font-size:clamp(36px,5.6vw,60px);line-height:1.03;letter-spacing:-.012em;color:#F7F4ED;max-width:13ch;text-wrap:balance}
+.dek{margin:0 0 26px;max-width:46ch;font-size:17.5px;color:var(--on-field-dim)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:12px 22px;border-radius:4px;font-family:var(--sign);font-weight:700;font-size:15.5px;letter-spacing:.13em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:transform .18s var(--settle),box-shadow .18s var(--settle),background-color .18s var(--settle),border-color .18s var(--settle)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-board{background:var(--board);color:var(--ink);border:3px solid var(--frame);box-shadow:0 2px 0 rgba(0,0,0,.35)}
+.btn-board:hover,.btn-board:focus-visible{transform:translateY(-2px);box-shadow:0 8px 18px -8px rgba(0,0,0,.55)}
+.btn-board:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.35)}
+.btn-rope{background:transparent;color:var(--rope);border:2px solid rgba(207,201,160,.55)}
+.btn-rope:hover,.btn-rope:focus-visible{background:rgba(207,201,160,.1);border-color:var(--rope)}
+.btn-rope:active{transform:translateY(1px)}
+.btn-sage{background:var(--sage);color:#fff;border:2px solid var(--sage-edge);box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.btn-sage:hover,.btn-sage:focus-visible{background:#4C7068;transform:translateY(-2px)}
+.btn-sage:active{transform:translateY(1px)}
+.btn-line{background:transparent;color:var(--ink);border:2px solid #9AA59F}
+.btn-line:hover,.btn-line:focus-visible{border-color:var(--ink);transform:translateY(-2px)}
+
+/* the signpost */
+.sign-wrap{grid-area:sign;display:flex;flex-direction:row-reverse;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:22px 0}
+.signpost{position:relative;width:320px;max-width:100%;padding-top:22px;margin:0 auto}
+.signpost::before,.signpost::after{content:"";position:absolute;top:12px;bottom:16px;width:17px;border-radius:4px 4px 0 0;background:linear-gradient(90deg,#171210,#4A372F 42%,#2A211E);z-index:1}
+.signpost::before{left:12px}
+.signpost::after{right:12px}
+.crown{position:relative;z-index:2;margin:0 0 14px;padding:15px 12px 13px;background:linear-gradient(180deg,#3C332F,#2E2623);border-radius:4px;box-shadow:0 0 0 1px rgba(0,0,0,.45),0 16px 28px -16px rgba(0,0,0,.75)}
+.crown::before{content:"";position:absolute;left:29%;right:29%;top:-15px;height:16px;background:#3C332F;border-radius:50% 50% 0 0/100% 100% 0 0}
+.crown::after{content:"";position:absolute;inset:5px;border:1px solid rgba(243,240,238,.17);border-radius:2px;pointer-events:none}
+.crown h1{margin:0;font-family:var(--sign);font-weight:700;font-size:26px;line-height:1.05;letter-spacing:.16em;text-indent:.16em;text-transform:uppercase;text-align:center;color:#F4F1EC;text-shadow:0 1px 0 rgba(0,0,0,.65)}
+.boards{list-style:none;margin:0;padding:0}
+.board{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:9px;min-height:48px;margin:0 22px 10px;padding:6px 12px;background:var(--board);color:var(--ink);text-decoration:none;text-align:center;line-height:1.15;border:4px solid var(--frame);border-radius:3px;box-shadow:0 2px 0 rgba(0,0,0,.3),0 10px 18px -12px rgba(0,0,0,.6);transition:transform .2s var(--settle),box-shadow .2s var(--settle)}
+.board:hover,.board:focus-visible{transform:translateY(-2px);box-shadow:0 2px 0 rgba(0,0,0,.3),0 16px 22px -12px rgba(0,0,0,.65)}
+.board:active{transform:translateY(1px)}
+.board svg{width:22px;height:22px;flex:none;stroke:var(--sage-ink);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.b-heavy{font-family:var(--sign);font-weight:800;font-size:15.5px;letter-spacing:.08em;text-transform:uppercase}
+.b-slab{font-family:var(--slab);font-weight:700;font-size:15px;letter-spacing:.07em;text-transform:uppercase;color:var(--sage-ink)}
+.b-script{font-family:var(--serif);font-style:italic;font-weight:600;font-size:18px;letter-spacing:.01em}
+.planter{position:relative;z-index:2;height:32px;margin:14px 0 0;border-radius:2px;background:linear-gradient(180deg,#6A554C 0 47%,#3A2E29 47% 53%,#574640 53% 100%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.3)}
+.planter::before{content:"";position:absolute;left:8px;right:8px;top:-13px;height:17px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='17'%3E%3Crect y='11' width='15' height='6' fill='%233E6A3A'/%3E%3Ccircle cx='6' cy='7' r='4' fill='%23C23A31'/%3E%3Ccircle cx='13' cy='5' r='3.5' fill='%23F1EFE6'/%3E%3C/svg%3E") 0 0/15px 17px repeat-x;border-radius:6px 6px 0 0}
+
+/* the BERTHS swing sign */
+.swing{position:relative;width:208px;margin-right:-26px;padding-top:34px;align-self:center;z-index:3}
+.swing .arm{position:absolute;top:14px;left:8px;right:0;height:9px;border-radius:5px;background:linear-gradient(180deg,#4F3B33,#2A211E);box-shadow:0 2px 3px rgba(0,0,0,.4)}
+.swing .addr{position:absolute;top:-14px;left:26px;padding:2px 9px 2px 11px;background:var(--plate);border:2px solid #3D464D;border-radius:3px;color:#fff;font-family:var(--sign);font-weight:700;font-size:15px;letter-spacing:.14em}
+.swing .addr::after{content:"";position:absolute;left:50%;bottom:-8px;height:6px;border-left:2px solid #8C918A}
+.swing-body{transform-origin:50% -12px}
+.swing-face{position:relative;margin-top:12px;padding:14px 12px 12px;background:var(--sage);border:2px solid var(--sage-edge);border-radius:36px 8px 5px 5px/20px 8px 5px 5px;box-shadow:0 14px 24px -12px rgba(0,0,0,.65)}
+.swing-face::before,.swing-face::after{content:"";position:absolute;top:-14px;height:13px;border-left:2px dotted #B9BEB4}
+.swing-face::before{left:34px}
+.swing-face::after{right:34px}
+.plate{display:block;padding:9px 4px;background:var(--board);color:var(--ink);border:2px solid #2B3A36;border-radius:2px;font-family:var(--sign);font-weight:800;font-size:17px;line-height:1;letter-spacing:.2em;text-indent:.2em;text-transform:uppercase;text-align:center}
+.plate+.plate{margin-top:6px;font-size:14px;letter-spacing:.24em;text-indent:.24em}
+.tags{display:flex;justify-content:space-between;gap:6px;margin-top:16px;padding:0 3px}
+.tags a{position:relative;display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--board);color:var(--ink);border:2px solid #2B3A36;border-radius:3px;font-family:var(--sign);font-weight:800;font-size:16.5px;text-decoration:none;box-shadow:0 6px 10px -6px rgba(0,0,0,.65);transition:transform .18s var(--settle),background-color .18s}
+.tags a::before{content:"";position:absolute;top:-16px;left:50%;height:14px;border-left:2px solid #B9BEB4}
+.tags a:hover,.tags a:focus-visible{background:#fff;transform:translateY(2px)}
+
+/* the live board */
+.river{margin-top:30px;max-width:540px;padding:14px 18px 12px;background:var(--board);color:var(--ink);border:4px solid var(--frame);border-radius:4px;box-shadow:0 22px 44px -26px rgba(0,0,0,.8)}
+.river .label{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--sign);font-weight:700;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage-ink)}
+.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:10px 0 9px}
+.fig{padding:2px 10px;min-width:0}
+.fig+.fig{border-left:1px solid #D9DCD3}
+.fig:first-child{padding-left:0}
+.fig .k{font-family:var(--sign);font-weight:700;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.fig .v{font-family:var(--serif);font-weight:600;font-size:clamp(23px,5.6vw,31px);line-height:1.15;white-space:nowrap}
+.fig .s{font-size:13.5px;line-height:1.35;color:var(--ink-dim)}
+.status{min-height:calc(2.9em + 8px);padding-top:8px;border-top:1px solid #E1E3DC;font-size:13px;line-height:1.45;color:var(--ink-dim)}
+.dot{display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:50%;background:#B9822A;vertical-align:1px}
+.dot.live{background:#2C8F63}
+
+@media(min-width:840px){
+  .hero-photo{left:auto;width:52%;height:100%}
+  .hero-photo::after{background:linear-gradient(90deg,var(--field) 0%,rgba(37,48,45,.55) 14%,rgba(37,48,45,0) 40%),linear-gradient(0deg,rgba(27,36,34,.72) 0%,rgba(27,36,34,0) 34%)}
+  .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"copy sign";align-items:center;gap:40px;padding-top:44px;min-height:min(780px,calc(100vh - 60px))}
+}
+
+/* ---------- section grammar ---------- */
+.sec{padding:76px 0}
+.sec-head{max-width:740px;margin:0 auto 40px;text-align:center;position:relative;z-index:2}
+.sec-head .kicker{letter-spacing:.24em;text-indent:.24em}
+.sec-head h2{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(30px,4.6vw,44px);line-height:1.08;letter-spacing:-.008em;text-wrap:balance}
+.sec-head p{max-width:58ch;margin:16px auto 0;font-size:17.5px;color:var(--on-field-dim)}
+.sec-head.left{text-align:left;margin:0 0 22px}
+.sec-head.left .kicker{text-indent:0}
+.sec-head.left p{margin-left:0}
+.deep{background:var(--field-deep)}
+.paper{background:var(--paper-ground);color:var(--ink);border-top:6px solid var(--frame);border-bottom:6px solid var(--frame)}
+.paper .kicker{color:var(--sage-ink)}
+.paper .sec-head p{color:var(--ink-dim)}
+.timber{background:linear-gradient(180deg,#30282A 0%,var(--timber) 40%,#2A2220 100%)}
+.win{position:relative;z-index:2;background:var(--board);color:var(--ink);border:4px solid var(--frame);border-radius:4px;box-shadow:0 24px 54px -32px rgba(0,0,0,.7);overflow:hidden}
+.win figcaption,.cap{padding:10px 14px 11px;font-size:14px;line-height:1.45;color:var(--ink-dim)}
+.photo-win{margin:0}
+.photo-win img{width:100%;aspect-ratio:3/2;object-fit:cover}
+.split{display:grid;gap:36px;align-items:center}
+@media(min-width:840px){.split{grid-template-columns:1.1fr .9fr;gap:60px}.split.flip{grid-template-columns:.9fr 1.1fr}}
+
+/* rope rail divider */
+.rail{position:relative;height:34px;margin:0 22px;z-index:2}
+.rail::before,.rail::after{content:"";position:absolute;top:0;width:10px;height:34px;border-radius:3px 3px 0 0;background:linear-gradient(90deg,#171210,#4A372F 42%,#2A211E)}
+.rail::before{left:0}.rail::after{right:0}
+.rail svg{position:absolute;left:8px;right:8px;top:6px;width:calc(100% - 16px);height:24px;overflow:visible}
+
+/* ---------- why ---------- */
+.assure{list-style:none;margin:24px 0 0;padding:0}
+.assure li{position:relative;padding:10px 0 10px 30px;border-top:1px solid rgba(207,201,160,.16)}
+.assure li:last-child{border-bottom:1px solid rgba(207,201,160,.16)}
+.assure li::before{content:"";position:absolute;left:0;top:23px;width:16px;height:2px;background:var(--rope)}
+.why-body p{color:var(--on-field-dim);font-size:17px}
+
+/* ---------- berths ---------- */
+.berth-board{position:relative;z-index:2}
+.sizes{border:0;margin:0 0 30px;padding:0;text-align:center}
+.sizes legend{width:100%;padding:0;margin:0 0 4px;font-family:var(--sign);font-weight:700;font-size:13px;letter-spacing:.22em;text-indent:.22em;text-transform:uppercase;color:var(--sage-ink)}
+.tagrow{position:relative;display:inline-flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:14px 12px 0}
+.tagrow::before{content:"";position:absolute;top:0;left:0;right:0;height:7px;border-radius:4px;background:linear-gradient(180deg,#4F3B33,#2A211E)}
+.sizes input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.sizes label{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:56px;min-height:50px;margin-top:12px;padding:0 14px;background:var(--board);color:var(--ink);border:3px solid var(--frame);border-radius:3px;font-family:var(--sign);font-weight:800;font-size:18.5px;cursor:pointer;box-shadow:0 6px 10px -7px rgba(0,0,0,.5);transition:transform .18s var(--settle),background-color .18s var(--settle),color .18s}
+.sizes label::before{content:"";position:absolute;top:-17px;left:50%;height:14px;border-left:2px solid var(--frame)}
+.sizes label:hover{transform:translateY(2px)}
+.sizes input:checked+label{background:var(--sage);border-color:var(--sage-edge);color:#fff}
+.sizes input:focus-visible+label{outline:3px solid var(--sage);outline-offset:3px}
+.fit{min-height:1.6em;margin:12px 0 0;font-size:15px;color:var(--ink-dim)}
+.rates-grid{display:grid;gap:22px;align-items:start}
+@media(min-width:840px){.rates-grid{grid-template-columns:1.3fr .7fr}}
+.docks{width:100%;border-collapse:collapse;font-size:16px}
+.docks caption{caption-side:top;padding:16px 18px 10px;text-align:left;font-family:var(--sign);font-weight:700;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage-ink)}
+.docks th,.docks td{padding:11px clamp(8px,2.4vw,16px);text-align:left;border-top:1px solid #E1E3DC;vertical-align:middle}
+.docks thead th{border-top:0;padding-top:2px;padding-bottom:8px;font-family:var(--sign);font-weight:700;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.docks .num{text-align:right}
+.docks .price{font-family:var(--serif);font-weight:600;font-size:19.5px;white-space:nowrap}
+.docks td{white-space:nowrap}
+.docks tbody tr{transition:opacity .2s var(--settle),background-color .2s}
+.dock{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:3px;background:var(--sage);color:#fff;font-family:var(--sign);font-weight:800;font-size:16px}
+.berth-board:has(#len-30:checked) .docks tbody tr:not([data-len="30"]),
+.berth-board:has(#len-35:checked) .docks tbody tr:not([data-len="35"]),
+.berth-board:has(#len-40:checked) .docks tbody tr:not([data-len="40"]),
+.berth-board:has(#len-50:checked) .docks tbody tr:not([data-len="50"]){opacity:.3}
+.berth-board:has(#len-30:checked) .docks tbody tr[data-len="30"],
+.berth-board:has(#len-35:checked) .docks tbody tr[data-len="35"],
+.berth-board:has(#len-40:checked) .docks tbody tr[data-len="40"],
+.berth-board:has(#len-50:checked) .docks tbody tr[data-len="50"]{background:#EAF0EB}
+.util{margin:0;padding:12px 18px 16px;border-top:1px solid #E1E3DC;font-size:14.5px;color:var(--ink-dim)}
+.rate-cards{display:grid;gap:16px}
+.rate-card{padding:18px 20px 14px}
+.rate-card h3{margin:0 0 4px;font-family:var(--serif);font-weight:600;font-size:21px;line-height:1.2}
+.rate-card .note{margin:0 0 8px;font-size:14.5px;color:var(--ink-dim)}
+.rate-card dl{margin:0;display:grid;grid-template-columns:1fr auto;column-gap:12px}
+.rate-card dt,.rate-card dd{margin:0;padding:8px 0;border-top:1px solid #E6E8E1}
+.rate-card dd{font-family:var(--serif);font-weight:600;font-size:18px;text-align:right;white-space:nowrap}
+.rate-card dd small{font-family:var(--sans);font-weight:400;font-size:13px;color:var(--muted)}
+.rate-note{max-width:62ch;margin:26px auto 0;text-align:center;font-size:15px;color:var(--ink-dim)}
+.rate-note strong{color:var(--ink)}
+.inquire-grid{display:grid;gap:22px;margin-top:44px;align-items:stretch}
+@media(min-width:840px){.inquire-grid{grid-template-columns:1.2fr .8fr}}
+.map-win img{width:100%;aspect-ratio:1017/699;object-fit:cover}
+.ask{padding:26px 24px 24px;display:flex;flex-direction:column;justify-content:center}
+.ask .kicker{color:var(--sage-ink);margin-bottom:6px}
+.phone-fig{display:inline-flex;align-items:center;min-height:44px;margin:0 0 10px;font-family:var(--serif);font-weight:600;font-size:clamp(30px,6vw,38px);line-height:1.1;color:var(--ink);text-decoration:none}
+.phone-fig:hover,.phone-fig:focus-visible{text-decoration:underline;text-decoration-color:var(--sage);text-underline-offset:6px}
+.ask p{color:var(--ink-dim);font-size:15.5px}
+.ask .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.mail-line{margin-top:12px;font-size:14.5px;color:var(--ink-dim)}
+.mail-line a{color:var(--sage-ink);font-weight:600}
+
+/* ---------- inside the gate ---------- */
+.tenants{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));position:relative;z-index:2}
+@media(min-width:840px){.tenants{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.tenant{display:flex;flex-direction:column;padding:24px 20px 6px;background:var(--board);color:var(--ink);border:5px solid var(--frame);border-radius:4px;box-shadow:0 2px 0 rgba(0,0,0,.3),0 22px 40px -28px rgba(0,0,0,.75)}
+.tenant h3{margin:0 0 12px;text-align:center;line-height:1.15}
+.tenant p{flex:1;font-size:15.5px;color:var(--ink-dim)}
+.t-heavy{font-family:var(--sign);font-weight:800;font-size:23px;letter-spacing:.08em;text-indent:.08em;text-transform:uppercase}
+.t-roman{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:.14em;text-indent:.14em;text-transform:uppercase}
+.t-slab{font-family:var(--slab);font-weight:700;font-size:21px;letter-spacing:.06em;text-indent:.06em;text-transform:uppercase;color:var(--sage-ink)}
+.t-script{font-family:var(--serif);font-style:italic;font-weight:600;font-size:23px}
+.tenant .tag{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:50px;margin-top:4px;padding:8px 0 6px;border-top:1px solid #DADDD5;font-family:var(--sign);font-weight:700;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--sage-ink)}
+.tenant .tag a{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--ink);text-decoration:none;letter-spacing:.12em}
+.tenant .tag a:hover,.tenant .tag a:focus-visible{text-decoration:underline;text-underline-offset:5px}
+.tenant .tag svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8}
+
+/* ---------- grounds ---------- */
+.mosaic{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr));position:relative;z-index:2}
+.mosaic .big,.mosaic .span-sm{grid-column:span 2}
+.mosaic .big img,.mosaic .span-sm img{aspect-ratio:16/9}
+.mosaic figure{margin:0;display:flex;flex-direction:column;background:var(--board);border:4px solid var(--frame);border-radius:4px;overflow:hidden}
+.mosaic img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.mosaic figcaption{padding:9px 12px 10px;font-size:14px;color:var(--ink-dim)}
+@media(min-width:840px){
+  .mosaic{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .mosaic .span-sm{grid-column:auto}
+  .mosaic .big{grid-column:span 2;grid-row:span 2}
+  .mosaic .big img{flex:1;min-height:0;aspect-ratio:auto;height:100%}
+}
+.facts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));margin-top:30px;position:relative;z-index:2}
+.fact{padding:18px 18px 16px;text-align:center;border:1px solid rgba(207,201,160,.28);border-radius:4px}
+.fact b{display:block;font-family:var(--serif);font-weight:600;font-size:clamp(34px,6vw,44px);line-height:1;color:#F7F4ED}
+.fact span{display:block;margin-top:8px;font-family:var(--sign);font-weight:700;font-size:13px;letter-spacing:.16em;text-indent:.16em;text-transform:uppercase;color:var(--rope)}
+
+/* ---------- wheelhouse ---------- */
+.wheel-copy p{color:var(--ink-dim);font-size:17px}
+
+/* ---------- history ---------- */
+.hist-grid{display:grid;gap:40px}
+@media(min-width:840px){.hist-grid{grid-template-columns:.85fr 1.15fr;gap:64px;align-items:start}}
+.hist-intro p{color:var(--on-field-dim);font-size:17px}
+.pull{margin:28px 0 0;padding:4px 0 4px 22px;border-left:3px solid var(--rope);font-family:var(--serif);font-style:italic;font-size:clamp(21px,2.6vw,25px);line-height:1.35;color:#F3EFE6}
+.pull cite{display:block;margin-top:10px;font-family:var(--sign);font-style:normal;font-weight:700;font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--rope)}
+.timeline{position:relative;list-style:none;margin:0;padding:0 0 0 40px}
+.timeline::before{content:"";position:absolute;left:8px;top:-8px;bottom:-8px;width:14px;border-radius:4px 4px 0 0;background:linear-gradient(90deg,#171210,#4A372F 42%,#2A211E)}
+.timeline li{position:relative;margin:0 0 16px;padding:14px 18px 14px;background:var(--board);color:var(--ink);border:4px solid var(--frame);border-radius:3px;box-shadow:0 16px 30px -22px rgba(0,0,0,.8)}
+.timeline li:last-child{margin-bottom:0}
+.timeline li::before{content:"";position:absolute;left:-26px;top:24px;width:24px;height:7px;border-radius:2px;background:linear-gradient(180deg,#5A453C,#2F2522)}
+.year{display:inline-block;margin-bottom:6px;padding:3px 9px 3px 10px;background:var(--plate);color:#fff;border-radius:2px;font-family:var(--sign);font-weight:700;font-size:13.5px;letter-spacing:.14em}
+.timeline h3{margin:0 0 4px;font-family:var(--serif);font-weight:600;font-size:20px;line-height:1.25}
+.timeline p{margin:0;font-size:15.5px;color:var(--ink-dim)}
+
+/* ---------- visit ---------- */
+.visit-grid{display:grid;gap:20px;position:relative;z-index:2}
+@media(min-width:840px){.visit-grid{grid-template-columns:1.05fr .95fr;align-items:stretch}}
+.gate-win{display:flex;flex-direction:column}
+.gate-win img{width:100%;flex:1;min-height:0;aspect-ratio:3/2;object-fit:cover}
+@media(min-width:840px){.gate-win img{aspect-ratio:auto;height:100%}}
+.visit-side{display:grid;gap:20px;align-content:start}
+.info{padding:22px 22px 20px}
+.info dl{margin:0 0 16px}
+.info dt{margin-top:12px;font-family:var(--sign);font-weight:700;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.info dt:first-child{margin-top:0}
+.info dd{margin:2px 0 0;font-size:16px}
+.info .addr-fig{font-family:var(--serif);font-weight:600;font-size:20px;line-height:1.3}
+.info dd a{color:var(--sage-ink);font-weight:600}
+.info .phone{font-family:var(--serif);font-size:22px;color:var(--ink);text-decoration:none}
+.info .btns{display:flex;flex-wrap:wrap;gap:10px}
+.map-frame iframe{display:block;width:100%;height:250px;border:0;filter:saturate(.8)}
+
+/* ---------- footer: planter & hallmarks ---------- */
+footer{background:var(--timber-deep);padding:0 0 0}
+.foot-in{padding:40px 0 30px;text-align:center}
+.foot-brand{display:inline-flex;align-items:center;gap:12px;color:#F4F1EC;font-family:var(--sign);font-weight:700;font-size:18px;letter-spacing:.18em;text-transform:uppercase}
+.foot-brand svg{width:48px;height:48px;color:var(--rope)}
+.hallmarks{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:24px 0 22px;padding:0;list-style:none}
+.hallmarks li{padding:8px 14px 8px calc(14px + .2em);border:1px solid rgba(207,201,160,.38);border-radius:3px;font-family:var(--sign);font-weight:700;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--rope)}
+.foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;margin:0 0 16px}
+.foot-links a{display:inline-flex;align-items:center;min-height:44px;color:#DCD8CE;font-size:14.5px;text-decoration:underline;text-decoration-color:rgba(207,201,160,.4);text-underline-offset:4px}
+.foot-links a:hover,.foot-links a:focus-visible{color:#fff;text-decoration-color:var(--rope)}
+.fine{margin:0;font-size:14px;color:#B4AFA6}
+.demo-note{margin:14px auto 0;max-width:76ch;font-size:13px;line-height:1.6;color:#A39E94}
+.planter-band{height:44px;position:relative;background:linear-gradient(180deg,#5E4A42 0 48%,#2E2420 48% 52%,#4E3D36 52% 100%)}
+.planter-band::before{content:"";position:absolute;left:0;right:0;top:-14px;height:18px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='18'%3E%3Crect y='11' width='17' height='7' fill='%233E6A3A'/%3E%3Ccircle cx='7' cy='8' r='4.5' fill='%23C23A31'/%3E%3Ccircle cx='15' cy='5' r='3.8' fill='%23F1EFE6'/%3E%3C/svg%3E") 0 0/17px 18px repeat-x}
+
+/* ---------- motion (enhancement only; page is complete without it) ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .swing-body{animation:sway 1.9s var(--settle) .35s both}
+  @keyframes sway{0%{transform:rotate(-7deg)}34%{transform:rotate(4deg)}58%{transform:rotate(-2deg)}78%{transform:rotate(.8deg)}100%{transform:rotate(0)}}
+  @supports (animation-timeline:view()){
+    .reveal{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
+    @keyframes rise{from{opacity:0;transform:translateY(26px)}}
+  }
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- one engraved motif (tules + great blue heron), reused by crop -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <g id="motif" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M60 560C62 470 58 380 70 252M84 560C86 480 92 400 88 300M110 560C108 470 118 360 130 204M140 560C144 500 140 430 152 340M176 560C172 480 184 380 196 282M470 560C468 480 474 400 462 300M494 560C496 470 488 380 500 262"/>
+      <path d="M66 252C62 230 64 205 70 196C76 205 78 230 74 252ZM126 204C122 178 124 150 131 142C138 150 140 178 135 204ZM193 282C189 258 191 236 197 228C203 236 205 258 200 282ZM497 262C493 238 495 214 501 206C507 214 509 238 504 262Z"/>
+      <path d="M70 196L71 174M131 142L132 118M197 228L198 208M501 206L502 184"/>
+      <path d="M60 560C40 470 30 420 6 360M110 560C130 470 160 420 214 380M140 560C120 500 98 470 70 440M176 560C200 500 236 470 262 450M470 560C450 490 430 450 404 420M494 560C510 500 520 470 532 440M84 560C70 500 74 450 50 400"/>
+      <path d="M300 300C330 276 392 280 414 318C426 340 410 362 378 364C344 366 312 350 300 300Z"/>
+      <path d="M318 304C348 296 384 306 406 330M330 318C352 316 372 322 390 336M344 332C360 332 374 338 384 348"/>
+      <path d="M414 320L444 344M410 332L438 356M402 342L428 366"/>
+      <path d="M306 298C292 272 314 244 300 220C290 202 274 204 268 192"/>
+      <path d="M268 192C270 178 290 176 296 188C298 194 294 200 286 202"/>
+      <path d="M290 182L322 172M292 186L318 182M268 192L222 202L270 199"/>
+      <circle cx="282" cy="188" r="1.6"/>
+      <path d="M352 364L344 470M366 364L372 470M344 470L326 478M344 470L350 480M344 470L338 482M372 470L390 478M372 470L366 481"/>
+      <path d="M230 476C260 470 290 482 320 476C350 470 380 482 410 476M250 492C280 486 310 498 340 492M300 506C320 502 340 510 360 506M20 520C50 514 80 526 110 520"/>
+    </g>
+    <g id="crest" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round">
+      <circle cx="32" cy="32" r="30" stroke-width="1.5"/>
+      <circle cx="32" cy="32" r="26.6" stroke-width=".8"/>
+      <g stroke-width="1.5">
+        <path d="M11 40.5H41L39 45H14Z"/>
+        <path d="M14 40.5V34.5H39V40.5M14 37.5H39"/>
+        <path d="M18 34.5V30H35V34.5M25 30V26H31.5V30"/>
+        <path d="M20 30V17.5M23.5 30V18.5M18.8 17.5H21.2M22.3 18.5H24.7"/>
+        <circle cx="45.5" cy="39" r="6"/>
+        <path d="M45.5 33V45M39.5 39H51.5M41.3 34.8L49.7 43.2M49.7 34.8L41.3 43.2"/>
+        <path d="M9 50Q12 48 15 50T21 50T27 50T33 50T39 50T45 50T51 50T57 50"/>
+      </g>
+    </g>
+  </defs>
+</svg>
+
+<header class="site">
+  <div class="wrap head-in">
+    <a class="brand" href="#top" aria-label="Riverboat Marina, back to top">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#crest"/></svg>
+      <span>Riverboat Marina</span>
+    </a>
+    <nav class="nav-inline" aria-label="Primary">
+      <a href="#berths">Berths &amp; rates</a>
+      <a href="#yard">Boatyard</a>
+      <a href="#grounds">Grounds</a>
+      <a href="#history">History</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <a class="tel" href="tel:+19167776462">(916) 777-6462</a>
+    <a class="tag-cta" href="#berths">Berths</a>
+    <details class="menu">
+      <summary aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+      <nav aria-label="Menu">
+        <a href="#berths">Berths &amp; rates</a>
+        <a href="#yard">Boatyard</a>
+        <a href="#grounds">Grounds</a>
+        <a href="#wheelhouse">The Wheelhouse</a>
+        <a href="#history">History</a>
+        <a href="#visit">Visit</a>
+        <a href="tel:+19167776462">Call (916) 777-6462</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================= HERO: the sign at the gate ================= -->
+<section class="hero" id="top" aria-label="Welcome">
+  <figure class="hero-photo">
+    <img src="img/hero-pelicans-1600.webp" srcset="img/hero-pelicans-900.webp 900w, img/hero-pelicans-1600.webp 1600w" sizes="(min-width:840px) 52vw, 100vw" width="1600" height="1067" alt="White pelicans lifting off a tule island on the Delta" fetchpriority="high" decoding="async">
+  </figure>
+
+  <div class="wrap hero-grid">
+    <div class="sign-wrap">
+      <nav class="signpost" aria-label="Marina directory">
+        <div class="crown"><h1>Riverboat Marina</h1></div>
+        <ul class="boards">
+          <li><a class="board b-heavy" href="#berths">Berths &amp; dry storage</a></li>
+          <li><a class="board b-slab" href="#yard">Delta Boat Works</a></li>
+          <li><a class="board b-heavy" href="#grounds"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4.5c1.6-1.4 4-.6 3.6 1.8-.3 1.9-2.6 2.6-2 5 .6 2.2 4.6 2.4 6.9 4.6M9 5.3 4.5 6.4M12.4 15l-.9 6M15 16l1.3 5"/></svg>Herons &amp; grounds</a></li>
+          <li><a class="board b-script" href="#history">The last Delta riverboat</a></li>
+          <li><a class="board b-heavy" href="#visit">Find the gate · 106</a></li>
+        </ul>
+        <div class="planter" aria-hidden="true"></div>
+      </nav>
+
+      <div class="swing" role="group" aria-label="Berths by boat length">
+        <span class="addr" aria-hidden="true">106</span>
+        <span class="arm" aria-hidden="true"></span>
+        <div class="swing-body">
+          <div class="swing-face">
+            <span class="plate">Berths</span>
+            <span class="plate">Inquire</span>
+          </div>
+          <div class="tags">
+            <a href="#berths" data-len-link="30" aria-label="Berths for 30 foot boats">30′</a>
+            <a href="#berths" data-len-link="35" aria-label="Berths for 35 foot boats">35′</a>
+            <a href="#berths" data-len-link="40" aria-label="Berths for 40 foot boats">40′</a>
+            <a href="#berths" data-len-link="50" aria-label="Berths for 50 foot boats">50′</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-copy">
+      <p class="kicker">Isleton · on the Delta Loop</p>
+      <p class="lede">Covered berths in the heart of the Delta.</p>
+      <p class="dek">Park the car, walk a few steps to your boat, and leave the week behind. Berths from 30′ to 50′ under mature trees, fenced dry storage, and a full-service boatyard inside the gate, on a thousand miles of fresh water.</p>
+      <div class="ctas">
+        <a class="btn btn-board" href="tel:+19167776462"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l1.6 4.2-2 1.3a11 11 0 0 0 6.9 6.9l1.3-2L20 16v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Call (916) 777-6462</a>
+        <a class="btn btn-rope" href="#berths">Berths &amp; rates</a>
+      </div>
+
+      <div class="river" aria-live="polite">
+        <div class="label"><span>On the river · right now</span></div>
+        <div class="figs">
+          <div class="fig"><div class="k" id="tide-k">Next high</div><div class="v" id="tide-v">1:53 pm</div><div class="s" id="tide-s">3.1 ft · rising</div></div>
+          <div class="fig"><div class="k">Air</div><div class="v" id="air-v">52°F</div><div class="s">Isleton</div></div>
+          <div class="fig"><div class="k">Wind</div><div class="v" id="wind-v">4 mph</div><div class="s" id="wind-s">from the NNE</div></div>
+        </div>
+        <div class="status" id="river-status"><span class="dot"></span>Indicative figures · live tide and weather load with the page</div>
+      </div>
+    </div>
+  </div>
+  <div class="engraving" style="left:-150px;bottom:-120px" aria-hidden="true">
+    <svg width="520" height="560" viewBox="0 0 520 560"><use href="#motif"/></svg>
+  </div>
+</section>
+
+<!-- ================= WHY BERTH HERE ================= -->
+<section class="sec deep" id="why" aria-labelledby="why-h">
+  <div class="wrap split">
+    <div class="why-body reveal">
+      <div class="sec-head left">
+        <p class="kicker">Why berth at Riverboat?</p>
+        <h2 id="why-h">A marina built to slow you down.</h2>
+      </div>
+      <p>Walk to the boatyard and have your boat looked after by professionals. Walk the grounds for nothing but the pleasure of it. Or stay a while and become part of the family here. That has been the idea since the beginning.</p>
+      <p>The Delta's fresh water is good for boating all year, and with more than a thousand miles of connected waterways there is always somewhere new to run.</p>
+      <ul class="assure">
+        <li>A well-kept marina with mature trees around the berths</li>
+        <li>Quick access to fast water and the San Joaquin River</li>
+        <li>Herons, egrets, hawks and owls in and around the marina</li>
+        <li>Delta Boat Works, a full-service boatyard, inside the gate</li>
+        <li>The Wheelhouse club for berthers, for gatherings up to 25</li>
+        <li>BBQ and picnic areas, and kayaks for tenants to use</li>
+      </ul>
+    </div>
+    <figure class="win photo-win reveal">
+      <img src="img/aerial.webp" width="800" height="533" loading="lazy" decoding="async" alt="Aerial view of Riverboat Marina: rows of covered berths around a wooded horseshoe island beside the river">
+      <figcaption>Twenty-six acres from the air: covered berth sheds, the wooded island, and the river beyond.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= BERTHS & STORAGE (leasing) ================= -->
+<section class="sec paper" id="berths" aria-labelledby="berths-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Berths &amp; storage</p>
+      <h2 id="berths-h">Covered berths from 30′ to 50′.</h2>
+      <p>Seven covered docks, open side ties, and fenced dry storage, all a short walk from the parking lot. Choose a length to see which docks fit.</p>
+    </div>
+
+    <div class="berth-board" id="berth-board">
+      <fieldset class="sizes">
+        <legend>Boat length</legend>
+        <div class="tagrow">
+          <input type="radio" name="len" id="len-all" value="all" checked><label for="len-all">All</label>
+          <input type="radio" name="len" id="len-30" value="30"><label for="len-30">30′</label>
+          <input type="radio" name="len" id="len-35" value="35"><label for="len-35">35′</label>
+          <input type="radio" name="len" id="len-40" value="40"><label for="len-40">40′</label>
+          <input type="radio" name="len" id="len-50" value="50"><label for="len-50">50′</label>
+        </div>
+        <p class="fit" id="fit" aria-live="polite"></p>
+      </fieldset>
+
+      <div class="rates-grid">
+        <div class="win">
+          <table class="docks">
+            <caption>Covered berths · monthly</caption>
+            <thead><tr><th scope="col">Dock</th><th scope="col">Length</th><th scope="col">Width</th><th scope="col" class="num">Monthly</th></tr></thead>
+            <tbody>
+              <tr data-len="30"><th scope="row"><span class="dock">G</span></th><td>30′</td><td>13′6″–13′8″</td><td class="num price">$295</td></tr>
+              <tr data-len="35"><th scope="row"><span class="dock">D</span></th><td>35′</td><td>14′–15′</td><td class="num price">$365</td></tr>
+              <tr data-len="35"><th scope="row"><span class="dock">E</span></th><td>35′</td><td>14′–14′10″</td><td class="num price">$365</td></tr>
+              <tr data-len="40"><th scope="row"><span class="dock">A</span></th><td>40′</td><td>15′–16′</td><td class="num price">$430</td></tr>
+              <tr data-len="40"><th scope="row"><span class="dock">B</span></th><td>40′</td><td>15′–16′</td><td class="num price">$430</td></tr>
+              <tr data-len="50"><th scope="row"><span class="dock">C</span></th><td>Under 50′</td><td>18′</td><td class="num price">$570</td></tr>
+              <tr data-len="50"><th scope="row"><span class="dock">F</span></th><td>50′</td><td>17′6″–18′</td><td class="num price">$570</td></tr>
+            </tbody>
+          </table>
+          <p class="util">50-amp power, water and Wi-Fi at most covered berths · 30-amp power at the 30′ berths.</p>
+        </div>
+
+        <div class="rate-cards">
+          <div class="win rate-card">
+            <h3>Open side ties</h3>
+            <p class="note">30-amp power and water available.</p>
+            <dl>
+              <dt>Up to 40′</dt><dd>$290 <small>/ mo</small></dd>
+              <dt>Over 40′</dt><dd>$8 <small>per ft / mo</small></dd>
+            </dl>
+          </div>
+          <div class="win rate-card">
+            <h3>Dry storage, covered</h3>
+            <p class="note">Inside units behind security fencing with lockable gates.</p>
+            <dl>
+              <dt>25′ unit</dt><dd>$145 <small>/ mo</small></dd>
+              <dt>30′ unit</dt><dd>$170 <small>/ mo</small></dd>
+            </dl>
+          </div>
+          <div class="win rate-card">
+            <h3>Dry storage, outside</h3>
+            <dl>
+              <dt>15′ · grass</dt><dd>$30 <small>/ mo</small></dd>
+              <dt>25′ · gravel</dt><dd>$50 <small>/ mo</small></dd>
+              <dt>35′ · gravel</dt><dd>$70 <small>/ mo</small></dd>
+              <dt>45′ · concrete, with power</dt><dd>$135 <small>/ mo</small></dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <p class="rate-note"><strong>Rate card effective May 1, 2018</strong>, the most recent the marina has published. Call the office to confirm today's rates and availability.</p>
+
+      <div class="inquire-grid">
+        <figure class="win photo-win map-win reveal">
+          <img src="img/marina-map.webp" width="1017" height="699" loading="lazy" decoding="async" alt="Illustrated map of Riverboat Marina: covered berth sheds wrapping the island, the marina office and clubhouse, Delta Boat Works, and dry storage along Brannan Island Road, with the Mokelumne River to the north">
+          <figcaption>Marina map, 2013 edition. The office sits at the foot of the entrance road.</figcaption>
+        </figure>
+        <div class="win ask reveal">
+          <p class="kicker">Ask about a berth</p>
+          <a class="phone-fig" href="tel:+19167776462">(916) 777-6462</a>
+          <p>Tell the office your boat's length and beam, covered or open, and when you'd like to move in.</p>
+          <div class="btns">
+            <a class="btn btn-sage" id="berth-mail" href="mailto:office@riverboatmarina.com?subject=Berth%20inquiry">Email the office</a>
+          </div>
+          <p class="mail-line">or write to <a href="mailto:office@riverboatmarina.com">office@riverboatmarina.com</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INSIDE THE GATE ================= -->
+<section class="sec" id="yard" aria-labelledby="yard-h">
+  <div class="engraving" style="right:-170px;top:-70px;transform:scaleX(-1);opacity:.1" aria-hidden="true">
+    <svg width="520" height="560" viewBox="0 0 520 560"><use href="#motif"/></svg>
+  </div>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Inside the gate</p>
+      <h2 id="yard-h">Everything your boat needs, inside the gate.</h2>
+      <p>The same names you read on the sign at the entrance: the boatyard, the brokerage, the canvas shop, and the foundation the owners started.</p>
+    </div>
+    <div class="tenants">
+      <article class="tenant reveal">
+        <h3 class="t-heavy">Delta Boat Works</h3>
+        <p>A full-service boatyard and parts store that began in the late 1950s on wooden boats and works mostly on fiberglass today. Its boatwrights bring decades at the trade.</p>
+        <div class="tag"><span>35-ton travel lift</span><a href="https://www.deltaboatworks.com/" target="_blank" rel="noopener" aria-label="Delta Boat Works website (opens in a new tab)">Visit<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a></div>
+      </article>
+      <article class="tenant reveal">
+        <h3 class="t-roman">Rubicon Yachts</h3>
+        <p>A full-service yacht brokerage. They price, prepare and sell your boat, or find the next one and handle the due diligence to deliver it anywhere.</p>
+        <div class="tag"><span>Brokerage</span><a href="https://rubiconyachts.com/" target="_blank" rel="noopener" aria-label="Rubicon Yachts website (opens in a new tab)">Visit<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a></div>
+      </article>
+      <article class="tenant reveal">
+        <h3 class="t-slab">Custom Marine</h3>
+        <p>Boat canvas, upholstery and carpets by Jesse Ungerer, who brings an engineer's background and finishes the work properly however difficult the job.</p>
+        <div class="tag"><span>Canvas &amp; upholstery</span></div>
+      </article>
+      <article class="tenant reveal">
+        <h3 class="t-script">Discover the Delta Foundation</h3>
+        <p>The owners' nonprofit, working to tell the Delta's story. Its membership card brings discounts at Delta businesses, and every new tenant receives one.</p>
+        <div class="tag"><span>501(c)(3)</span><a href="https://www.discoverthedelta.org/" target="_blank" rel="noopener" aria-label="Discover the Delta Foundation website (opens in a new tab)">Visit<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="rail" aria-hidden="true"><svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path d="M0 2Q500 42 1000 2" fill="none" stroke="#6F6A4C" stroke-width="5" vector-effect="non-scaling-stroke"/><path d="M0 2Q500 42 1000 2" fill="none" stroke="#CFC9A0" stroke-width="5" stroke-dasharray="4 5" vector-effect="non-scaling-stroke"/></svg></div>
+
+<!-- ================= THE GROUNDS ================= -->
+<section class="sec deep" id="grounds" aria-labelledby="grounds-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">The grounds</p>
+      <h2 id="grounds-h">Twenty-six acres, and the herons were here first.</h2>
+      <p>A horseshoe island of huge cottonwoods holds one of the largest great blue heron rookeries around, with more than a hundred nests. Across the water on Andrus Island, woods of about nineteen tree species shelter hawks, owls and songbirds.</p>
+    </div>
+    <div class="mosaic">
+      <figure class="big reveal"><img src="img/heron-nest.webp" width="720" height="480" loading="lazy" decoding="async" alt="Great blue herons at their nests high in a cottonwood"><figcaption>The rookery: great blue herons nesting in the cottonwoods.</figcaption></figure>
+      <figure class="reveal"><img src="img/heron-flight.webp" width="720" height="481" loading="lazy" decoding="async" alt="A heron in flight through cottonwood leaves"><figcaption>Coming home through the canopy.</figcaption></figure>
+      <figure class="reveal"><img src="img/kayak.webp" width="720" height="540" loading="lazy" decoding="async" alt="A paddler and a dog in a yellow kayak on calm water beside the tules"><figcaption>Kayaks for tenants. Crew optional.</figcaption></figure>
+      <figure class="reveal"><img src="img/canal-berths.webp" width="800" height="533" loading="lazy" decoding="async" alt="A calm channel lined with covered berths, palms and dense greenery"><figcaption>Covered berths along the channel.</figcaption></figure>
+      <figure class="reveal"><img src="img/pelicans.webp" width="615" height="300" loading="lazy" decoding="async" alt="A flock of white pelicans resting at the water's edge"><figcaption>White pelicans on the river.</figcaption></figure>
+      <figure class="span-sm reveal"><img src="img/covered-sheds.webp" width="800" height="533" loading="lazy" decoding="async" alt="Long covered berth sheds reflected in the still water of the marina"><figcaption>Out of the wind, by design.</figcaption></figure>
+    </div>
+    <div class="facts">
+      <div class="fact reveal"><b>26</b><span>acres of marina</span></div>
+      <div class="fact reveal"><b>100+</b><span>heron nests</span></div>
+      <div class="fact reveal"><b>~19</b><span>tree species</span></div>
+      <div class="fact reveal"><b>1,000+</b><span>miles of waterways</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= THE WHEELHOUSE ================= -->
+<section class="sec paper" id="wheelhouse" aria-labelledby="wheel-h">
+  <div class="wrap split flip">
+    <figure class="win photo-win reveal">
+      <img src="img/wheelhouse.webp" width="800" height="533" loading="lazy" decoding="async" alt="Berthers gathered around tables in a bright clubroom with a ship's wheel on the wall">
+      <figcaption>The Wheelhouse, the berthers' clubroom.</figcaption>
+    </figure>
+    <div class="wheel-copy reveal">
+      <div class="sec-head left">
+        <p class="kicker">For berthers</p>
+        <h2 id="wheel-h">The Wheelhouse.</h2>
+      </div>
+      <p>The berthers' club, with inside and outside seating for gatherings of up to 25. Bring the grill out to the BBQ and picnic areas, or take a kayak around the island before supper.</p>
+      <p>Planning a birthday, a dock party or a club meeting? Ask the office about reserving the Wheelhouse.</p>
+      <div class="ctas">
+        <a class="btn btn-sage" href="mailto:office@riverboatmarina.com?subject=Reserving%20the%20Wheelhouse">Ask about reserving</a>
+        <a class="btn btn-line" href="tel:+19167776462">Call the office</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HISTORY ================= -->
+<section class="sec timber" id="history" aria-labelledby="hist-h">
+  <div class="wrap hist-grid">
+    <div class="hist-intro reveal">
+      <div class="sec-head left">
+        <p class="kicker">Our history</p>
+        <h2 id="hist-h">The last Delta riverboat.</h2>
+      </div>
+      <p>John Moore spent much of the Second World War as a shipwright at Mare Island. He loved two things: building and repairing boats, and playing his trumpet the way a big-band professional would.</p>
+      <p>He wanted a marina of his own, in the middle of the Delta where the boating was, with slack current, a site out of the wind, and a natural setting where people from the city could simply get away.</p>
+      <blockquote class="pull">“A visit to Riverboat Marina will show that he accomplished his goals.”<cite>From the marina's own history</cite></blockquote>
+    </div>
+    <ol class="timeline">
+      <li class="reveal"><span class="year">Late 1950s</span><h3>The boatyard</h3><p>John begins Delta Boat Works and builds two boat elevator lifts.</p></li>
+      <li class="reveal"><span class="year">A first</span><h3>Covered berths</h3><p>He builds the first covered berths in California, just as he had pictured them.</p></li>
+      <li class="reveal"><span class="year">1961</span><h3>The Sutter</h3><p>John buys the Sutter, the last used Delta riverboat, and spends five years converting her single-handed into Moore's Riverboat, a restaurant and bar known across the Delta.</p></li>
+      <li class="reveal"><span class="year">1966</span><h3>A $250 handshake</h3><p>The Riverboat opens. John leases the boatyard to two Mare Island friends, Julio and Silvio Focaracci, on one sheet of paper at $250 a month. Seventeen years later the rent was still $250.</p></li>
+      <li class="reveal"><span class="year">1984</span><h3>A new family</h3><p>John and the Focaraccis retire, and Ken Scheidegger and his family take over Riverboat Marina and Delta Boat Works, determined to carry the tradition on.</p></li>
+      <li class="reveal"><span class="year">1991</span><h3>The yard grows</h3><p>Two large metal buildings, a 10,000-square-foot concrete work area, and a travel lift rated for 35 tons.</p></li>
+    </ol>
+  </div>
+  <div class="engraving" style="left:-200px;bottom:-140px;opacity:.08" aria-hidden="true">
+    <svg width="520" height="560" viewBox="0 0 520 560"><use href="#motif"/></svg>
+  </div>
+</section>
+
+<!-- ================= VISIT ================= -->
+<section class="sec" id="visit" aria-labelledby="visit-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Visit</p>
+      <h2 id="visit-h">Look for the sign at 106.</h2>
+      <p>Riverboat Marina is on the Delta Loop in Isleton, in the heart of the Sacramento–San Joaquin River Delta. By water, the marina opens onto the Mokelumne River with quick access to the San Joaquin.</p>
+    </div>
+    <div class="visit-grid">
+      <figure class="win photo-win gate-win reveal">
+        <img src="img/gate-sign.webp" width="800" height="533" loading="lazy" decoding="async" alt="The marina's entrance sign: timber posts, a Riverboat Marina crown board, stacked name boards for the businesses inside, and a green Berths sign with length tags">
+        <figcaption>The sign at the gate, 106 W. Brannan Island Road.</figcaption>
+      </figure>
+      <div class="visit-side">
+        <div class="win info reveal">
+          <dl>
+            <dt>Address</dt>
+            <dd class="addr-fig">106 W. Brannan Island Road<br>Isleton, CA 95641</dd>
+            <dt>Marina office</dt>
+            <dd><a class="phone" href="tel:+19167776462">(916) 777-6462</a><br><a href="mailto:office@riverboatmarina.com">office@riverboatmarina.com</a></dd>
+            <dt>Delta Boat Works</dt>
+            <dd><a href="mailto:info@deltaboatworks.com">info@deltaboatworks.com</a></dd>
+          </dl>
+          <div class="btns">
+            <a class="btn btn-sage" href="https://www.google.com/maps/dir/?api=1&amp;destination=106+W+Brannan+Island+Rd,+Isleton,+CA+95641" target="_blank" rel="noopener">Directions<span class="sr-only"> (opens in a new tab)</span></a>
+            <a class="btn btn-line" href="tel:+19167776462">Call</a>
+          </div>
+        </div>
+        <div class="win map-frame reveal">
+          <iframe title="Map: Riverboat Marina, 106 W. Brannan Island Road, Isleton" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=-121.5738%2C38.0958%2C-121.5598%2C38.1038&amp;layer=mapnik&amp;marker=38.09983%2C-121.56681"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="rail" aria-hidden="true" style="margin-top:22px"><svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path d="M0 2Q500 42 1000 2" fill="none" stroke="#6F6A4C" stroke-width="5" vector-effect="non-scaling-stroke"/><path d="M0 2Q500 42 1000 2" fill="none" stroke="#CFC9A0" stroke-width="5" stroke-dasharray="4 5" vector-effect="non-scaling-stroke"/></svg></div>
+  <div class="engraving" style="left:50%;top:10px;margin-left:-260px;opacity:.07" aria-hidden="true">
+    <svg width="520" height="300" viewBox="0 200 520 300"><use href="#motif"/></svg>
+  </div>
+  <div class="wrap foot-in">
+    <div class="foot-brand"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#crest"/></svg><span>Riverboat Marina</span></div>
+    <ul class="hallmarks">
+      <li>106 W. Brannan Island Rd</li>
+      <li>Covered berths 30′–50′</li>
+      <li>Boatyard on site</li>
+      <li>26 acres on the Delta</li>
+    </ul>
+    <nav class="foot-links" aria-label="Around the Delta">
+      <a href="https://www.deltaboatworks.com/" target="_blank" rel="noopener">Delta Boat Works</a>
+      <a href="https://www.discoverthedelta.org/" target="_blank" rel="noopener">Discover the Delta Foundation</a>
+      <a href="https://rubiconyachts.com/" target="_blank" rel="noopener">Rubicon Yachts</a>
+      <a href="http://www.deltafarmersmarket.com/" target="_blank" rel="noopener">Delta Farmers Market</a>
+    </nav>
+    <p class="fine">© 2026 Riverboat Marina · 106 W. Brannan Island Road, Isleton, CA 95641 · (916) 777-6462</p>
+    <p class="demo-note">Design concept by Merritt Digital · demonstration build · rates and tenant list as last published by the marina, pending confirmation · tide: NOAA predictions, station 9415229 · weather: Open-Meteo</p>
+  </div>
+  <div class="planter-band" aria-hidden="true"></div>
+</footer>
+
+<script>
+/* ---- berth length tags: filter + prefilled inquiry ---- */
+(function(){
+  var radios=document.querySelectorAll('input[name=len]');
+  var mail=document.getElementById('berth-mail');
+  var fit=document.getElementById('fit');
+  var rows=document.querySelectorAll('.docks tbody tr');
+  function update(){
+    var c=document.querySelector('input[name=len]:checked'), v=c?c.value:'all';
+    var subj='Berth inquiry'+(v!=='all'?' · '+v+'′ boat':'');
+    if(mail) mail.href='mailto:office@riverboatmarina.com?subject='+encodeURIComponent(subj);
+    if(!fit) return;
+    if(v==='all'){fit.textContent='';return;}
+    var docks=[],price='';
+    rows.forEach(function(r){if(r.getAttribute('data-len')===v){docks.push(r.querySelector('.dock').textContent);price=r.querySelector('.price').textContent;}});
+    fit.textContent=docks.length?('Dock'+(docks.length>1?'s ':' ')+docks.join(' and ')+' take '+v+'′ boats · '+price+' a month (2018 rate card)'):'';
+  }
+  radios.forEach(function(r){r.addEventListener('change',update)});
+  document.querySelectorAll('[data-len-link]').forEach(function(a){
+    a.addEventListener('click',function(){var r=document.getElementById('len-'+a.getAttribute('data-len-link'));if(r){r.checked=true;update();}});
+  });
+  document.querySelectorAll('.menu nav a').forEach(function(a){a.addEventListener('click',function(){var d=a.closest('details');if(d)d.open=false;});});
+  update();
+})();
+
+/* ---- the LIVE element: tide (NOAA 9415229) + weather (Open-Meteo), fail-soft ---- */
+(function(){
+  var st=document.getElementById('river-status');
+  if(!st||!window.fetch) return;
+  function set(id,t){var e=document.getElementById(id);if(e)e.textContent=t;}
+  function pacific(){
+    var o={};
+    new Intl.DateTimeFormat('en-CA',{timeZone:'America/Los_Angeles',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'})
+      .formatToParts(new Date()).forEach(function(p){o[p.type]=p.value;});
+    return {day:o.year+o.month+o.day, stamp:o.year+'-'+o.month+'-'+o.day+' '+o.hour+':'+o.minute};
+  }
+  function hm(t){var h=+t.slice(11,13),m=t.slice(14,16);return (h%12||12)+':'+m+' '+(h<12?'am':'pm');}
+  function compass(d){return ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'][Math.round((((d%360)+360)%360)/22.5)%16];}
+  function get(u){
+    var ctl=window.AbortController?new AbortController():null, t=setTimeout(function(){if(ctl)ctl.abort();},8000);
+    return fetch(u,ctl?{signal:ctl.signal}:{}).then(function(r){clearTimeout(t);if(!r.ok)throw new Error(r.status);return r.json();});
+  }
+  st.innerHTML='<span class="dot"></span>Reading the river…';
+  var now=pacific();
+  var tideURL='https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?product=predictions&application=riverboat_marina_demo&station=9415229&datum=MLLW&interval=hilo&units=english&time_zone=lst_ldt&format=json&begin_date='+now.day+'&range=48';
+  var wxURL='https://api.open-meteo.com/v1/forecast?latitude=38.0998&longitude=-121.5668&current=temperature_2m,wind_speed_10m,wind_direction_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FLos_Angeles';
+  Promise.all([get(tideURL).catch(function(){return null;}),get(wxURL).catch(function(){return null;})]).then(function(res){
+    var tideOK=false, wxOK=false;
+    var preds=res[0]&&res[0].predictions;
+    if(preds&&preds.length){
+      var nx=null;for(var i=0;i<preds.length;i++){if(preds[i].t>now.stamp){nx=preds[i];break;}}
+      if(nx&&isFinite(parseFloat(nx.v))){
+        set('tide-k',nx.type==='H'?'Next high':'Next low');
+        set('tide-v',hm(nx.t));
+        set('tide-s',parseFloat(nx.v).toFixed(1)+' ft · '+(nx.type==='H'?'rising':'falling'));
+        tideOK=true;
+      }
+    }
+    var cur=res[1]&&res[1].current;
+    if(cur&&isFinite(cur.temperature_2m)&&isFinite(cur.wind_speed_10m)){
+      set('air-v',Math.round(cur.temperature_2m)+'°F');
+      set('wind-v',Math.round(cur.wind_speed_10m)+' mph');
+      set('wind-s',isFinite(cur.wind_direction_10m)?'from the '+compass(cur.wind_direction_10m):'at the marina');
+      wxOK=true;
+    }
+    var when=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    if(tideOK&&wxOK){
+      st.innerHTML='<span class="dot live"></span>Live · updated '+when+' · tide: NOAA prediction, station 9415229 · weather: Open-Meteo';
+    }else if(tideOK||wxOK){
+      st.innerHTML='<span class="dot live"></span>Live '+(tideOK?'tide':'weather')+' · updated '+when+' · '+(tideOK?'weather':'tide')+' figures indicative, that feed did not answer';
+    }else{
+      st.innerHTML='<span class="dot"></span>Indicative figures · the live tide and weather feeds did not answer just now';
+    }
+  });
+})();
+</script>
+</body>
+</html>
