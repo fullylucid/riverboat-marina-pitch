@@ -1,0 +1,27 @@
+var _____WB$wombat$assign$function_____=function(name){return (globalThis._wb_wombat && globalThis._wb_wombat.local_init && globalThis._wb_wombat.local_init(name))||globalThis[name];};if(!globalThis.__WB_pmw){globalThis.__WB_pmw=function(obj){this.__WB_source=obj;return this;}}{
+let window = _____WB$wombat$assign$function_____("window");
+let self = _____WB$wombat$assign$function_____("self");
+let document = _____WB$wombat$assign$function_____("document");
+let location = _____WB$wombat$assign$function_____("location");
+let top = _____WB$wombat$assign$function_____("top");
+let parent = _____WB$wombat$assign$function_____("parent");
+let frames = _____WB$wombat$assign$function_____("frames");
+let opener = _____WB$wombat$assign$function_____("opener");
+window.SLB&&SLB.has_child("View.extend_template_tag_handler")&&SLB.View.extend_template_tag_handler("ui",{_hooks:function(){this.on("dom_init",function(ev){this.call_attribute("events_init",ev)})},events_init:function(ev){var ev=ev.data.template.get_theme().get_viewer(),thm=ev.get_theme();ev.on("events-complete",function(ev,v){thm.dom_get_tag("ui","close").click(function(){return v.close()}),thm.dom_get_tag("ui","nav_next").click(function(){v.item_next()}),thm.dom_get_tag("ui","nav_prev").click(function(){v.item_prev()}),thm.dom_get_tag("ui","slideshow_control").click(function(){v.slideshow_toggle()})}),ev.on("slideshow-toggle",function(ev,v){var tags=thm.get_tags("ui","slideshow_control");if(tags.length)for(var x=0;x<tags.length;x++)tags[x].render(v.get_item()).done(function(r){r.tag.dom_get().html(r.output)})})},render:function(item,tag,dfr){item=this.handle_prop(tag.get_prop(),item,tag);return this.util.is_promise(item)?item.done(function(output){dfr.resolve(output)}):dfr.resolve(item),dfr.promise()},props:{slideshow_control:function(item){var item=item.get_viewer(),prop=item.slideshow_active()?"slideshow_stop":"slideshow_start";return item.get_label(prop)},group_status:function(item){if(item.get_group().is_single())return"";var key,ph,out=item.get_viewer().get_label("group_status"),handlers={current:function(){return item.get_group(!0).get_pos()+1},total:function(){return item.get_group().get_size()}};for(key in handlers)-1!==out.indexOf(ph="%"+key+"%")&&(out=out.replace(new RegExp(ph,"ig"),handlers[key]()));return out}}});
+}
+
+/*
+     FILE ARCHIVED ON 05:36:03 Nov 20, 2026 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 00:36:18 Nov 21, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  capture_cache.get: 1.151
+  load_resource: 81.869
+  PetaboxLoader3.resolve: 31.987
+  PetaboxLoader3.datanode: 47.112
+*/

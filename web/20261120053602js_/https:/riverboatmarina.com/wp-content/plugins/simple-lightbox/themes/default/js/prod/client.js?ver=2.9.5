@@ -1,0 +1,27 @@
+var _____WB$wombat$assign$function_____=function(name){return (globalThis._wb_wombat && globalThis._wb_wombat.local_init && globalThis._wb_wombat.local_init(name))||globalThis[name];};if(!globalThis.__WB_pmw){globalThis.__WB_pmw=function(obj){this.__WB_source=obj;return this;}}{
+let window = _____WB$wombat$assign$function_____("window");
+let self = _____WB$wombat$assign$function_____("self");
+let document = _____WB$wombat$assign$function_____("document");
+let location = _____WB$wombat$assign$function_____("location");
+let top = _____WB$wombat$assign$function_____("top");
+let parent = _____WB$wombat$assign$function_____("parent");
+let frames = _____WB$wombat$assign$function_____("frames");
+let opener = _____WB$wombat$assign$function_____("opener");
+window.SLB&&SLB.has_child("View.extend_theme")&&!function($){SLB.View.extend_theme("slb_default",{transition:{open:function(v,dfr){var l=v.get_layout().hide(),o=v.get_overlay().hide(),thm=this,v=v.dom_get();return v.find(".slb_content").css({width:"",height:""}).find(this.get_tag_selector()).hide(),v.find(".slb_details").height(0),v.show({always:function(){var pos={top_base:$(document).scrollTop()};document.documentElement.clientWidth>thm.get_breakpoint("small")&&(pos.top=pos.top_base+$(window).height()/2-l.height()/2,!(pos.top<pos.top_base))||(pos.top=pos.top_base),o.fadeIn({always:function(){l.css(pos),dfr.resolve()}})}}),dfr.promise()},close:function(v,dfr){function reset(){c.width("").height(""),l.css("opacity",""),dfr.resolve()}var pos,anims,l=v.get_layout(),c=l.find(".slb_content");return v.animation_enabled()&&document.documentElement.clientWidth>this.get_breakpoint("small")?(anims={layout:{opacity:0,top:$(document).scrollTop()+$(window).height()/2},content:{width:0,height:0},speed:"fast"},pos=l.animate(anims.layout,anims.speed).promise(),anims=c.animate(anims.content,anims.speed).promise(),$.when(pos,anims).done(function(){v.get_overlay().fadeOut({always:function(){reset()}})})):(l.css("opacity",0),reset()),dfr.promise()},load:function(v){return v.get_layout().find(".slb_loading").show(),(document.documentElement.clientWidth>this.get_breakpoint("small")?v.get_layout().fadeIn():v.get_layout().show()).promise()},unload:function(v,dfr){var v=v.get_layout(),det=v.find(".slb_details"),v=v.find(".slb_content "+this.get_tag_selector());return det.css({height:0}),v.hide(),$.when(det.promise(),v.promise()).done(function(){dfr.resolve()}),dfr.promise()},complete:function(v,dfr){var dims_item,dims_det_height,pos,thm,v=v.get_layout(),loader=v.find(".slb_loading"),det=v.find(".slb_details"),det_data=det.find(".slb_data"),c=v.find(".slb_content"),c_tag=c.find(this.get_tag_selector());return document.documentElement.clientWidth>this.get_breakpoint("small")?(dims_item=this.get_item_dimensions(),det.width(dims_item.width),dims_det_height=det_data.outerHeight(),det.width(""),(pos={top_base:$(document).scrollTop()}).top=pos.top_base+$(window).height()/2-(dims_det_height+dims_item.height)/2,pos.top<pos.top_base&&(pos.top=pos.top_base),pos=v.animate(pos,"fast").promise(),dims_item=c.animate(dims_item,"fast").promise(),thm=this,$.when(pos,dims_item).done(function(){loader.fadeOut("fast",function(){c.find(thm.get_tag_selector("item","content")).fadeIn(function(){c_tag.show(),det.animate({height:det_data.outerHeight()},"slow").promise().done(function(){det.height(""),dfr.resolve()})})})})):(loader.hide(),c_tag.show(),det.height(""),dfr.resolve()),dfr.promise()}}})}(jQuery);
+}
+
+/*
+     FILE ARCHIVED ON 05:36:03 Nov 20, 2026 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 00:36:17 Nov 21, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  capture_cache.get: 0.446
+  load_resource: 130.466
+  PetaboxLoader3.resolve: 36.813
+  PetaboxLoader3.datanode: 75.712
+*/
